@@ -1,3 +1,7 @@
+# work in progress!!
+
+do not use it yet!
+
 # wordpress theme base
 
 example of using grunt for wordpress theme development
