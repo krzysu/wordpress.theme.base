@@ -76,6 +76,21 @@ module.exports = function(grunt) {
       }
     },
 
+    stylus: {
+      main: {
+        // options: {
+        //   use: [
+        //     require('nib') // use stylus plugin at compile time
+        //   ]
+        // },
+        files: {
+          './style.css': [
+            'stylesheets/**/*.styl'
+          ]
+        }
+      }
+    },
+
     watch: { // for development run 'grunt watch'
       js: {
         files: ['javascripts/sources/**/*.coffee', 'javascripts/libs/**/*.js'],
@@ -86,7 +101,7 @@ module.exports = function(grunt) {
 
   // defined tasks
   grunt.registerTask('build:js', ['jshint', 'coffee:main', 'concat:libs', 'concat:main', 'uglify:main']);
-  grunt.registerTask('build:css', ['jshint', '']);
-  grunt.registerTask('build:all', ['build:js']);
+  grunt.registerTask('build:css', ['jshint', 'stylus:main']);
+  grunt.registerTask('build:all', ['build:js', 'build:css']);
 
 };
