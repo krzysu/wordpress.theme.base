@@ -18,6 +18,7 @@ example of using grunt for wordpress theme development
         - sources
         - ie
         - libs
+        libs.js
         main.js // resulting file included in template
       - stylesheets
         - libs

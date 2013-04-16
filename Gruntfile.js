@@ -14,50 +14,79 @@ module.exports = function(grunt) {
 
     jshint: {
       files: [
-        'Gruntfile.js',
-        'js/jquery.flot.tooltip.source.js'
+        'Gruntfile.js'
       ]
+    },
+
+    coffee: {
+      main: {
+        files: {
+          'javascripts/main.js': [
+            'javascripts/sources/main.coffee',
+            'javascripts/sources/**/*.coffee'
+          ]
+        }
+      }
     },
 
     concat: {
       options: {
-        banner: '/*\n' +
-        ' * <%= pkg.name %>\n' +
-        ' * \n' +
-        ' * description: <%= pkg.description %>\n' +
-        ' * version: <%= pkg.version %>\n' +
-        ' * author: <%= pkg.author %>\n' +
-        ' * website: <%= pkg.website %>\n' +
-        ' * \n' +
-        ' * build on <%= grunt.template.today("yyyy-mm-dd") %>\n' +
-        ' * released under <%= pkg.license %> License, 2012\n' +
-        '*/ \n'
+        separator: ';\n'
+      },
+      libs: {
+        src: [
+          'javascripts/libs/jquery-1.7.2.min.js',
+          'javascripts/libs/**/*.js'
+        ],
+        dest: 'javascripts/libs.js'
       },
       main: {
-        src: ['js/jquery.flot.tooltip.source.js'],
-        dest: 'js/jquery.flot.tooltip.js'
+        src: [
+          'javascripts/libs.js',
+          'javascripts/main.js'
+        ],
+        dest: 'javascripts/main.js'
       }
     },
 
+    // concat: {
+    //   options: {
+    //     banner: '/*\n' +
+    //     ' * <%= pkg.name %>\n' +
+    //     ' * \n' +
+    //     ' * description: <%= pkg.description %>\n' +
+    //     ' * version: <%= pkg.version %>\n' +
+    //     ' * author: <%= pkg.author %>\n' +
+    //     ' * website: <%= pkg.website %>\n' +
+    //     ' * \n' +
+    //     ' * build on <%= grunt.template.today("yyyy-mm-dd") %>\n' +
+    //     ' * released under <%= pkg.license %> License, 2012\n' +
+    //     '*/ \n'
+    //   },
+    //   main: {
+    //     src: ['js/jquery.flot.tooltip.source.js'],
+    //     dest: 'js/jquery.flot.tooltip.js'
+    //   }
+    // },
+
     uglify: {
-      options: {
-        banner: '<%= concat.options.banner %>'
-      },
       main: {
-        src: ['js/jquery.flot.tooltip.source.js'],
-        dest: 'js/jquery.flot.tooltip.min.js'
+        src: ['javascripts/main.js'],
+        dest: 'javascripts/main.js'
       }
     },
 
     watch: { // for development run 'grunt watch'
-      main: {
-        files: 'js/*.source.js',
-        tasks: ['jshint','concat:main','uglify:main']
+      js: {
+        files: ['javascripts/sources/**/*.coffee', 'javascripts/libs/**/*.js'],
+        tasks: ['coffee:main', 'concat:libs', 'concat:main']
       }
     }
   });
 
-  // Default task
-  grunt.registerTask('build', ['jshint', 'concat:main', 'uglify:main']);
+  // defined tasks
+  grunt.registerTask('build:js', ['jshint', 'coffee:main', 'concat:libs', 'concat:main', 'uglify:main']);
+  grunt.registerTask('build:css', ['jshint', '']);
+  grunt.registerTask('build:all', ['build:js']);
 
 };
