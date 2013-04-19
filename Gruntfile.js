@@ -47,35 +47,8 @@ module.exports = function(grunt) {
           'javascripts/main.js'
         ],
         dest: 'javascripts/main.js'
-      },
-      styles: {
-        src: [
-          'stylesheets/banner.css',
-          './style.css'
-        ],
-        dest: './style.css'
       }
     },
-
-    // concat: {
-    //   options: {
-    //     banner: '/*\n' +
-    //     ' * <%= pkg.name %>\n' +
-    //     ' * \n' +
-    //     ' * description: <%= pkg.description %>\n' +
-    //     ' * version: <%= pkg.version %>\n' +
-    //     ' * author: <%= pkg.author %>\n' +
-    //     ' * website: <%= pkg.website %>\n' +
-    //     ' * \n' +
-    //     ' * build on <%= grunt.template.today("yyyy-mm-dd") %>\n' +
-    //     ' * released under <%= pkg.license %> License, 2012\n' +
-    //     '*/ \n'
-    //   },
-    //   main: {
-    //     src: ['js/jquery.flot.tooltip.source.js'],
-    //     dest: 'js/jquery.flot.tooltip.js'
-    //   }
-    // },
 
     uglify: {
       main: {
@@ -86,14 +59,31 @@ module.exports = function(grunt) {
 
     stylus: {
       main: {
-        // options: {
-        //   use: [
-        //     require('nib') // use stylus plugin at compile time
-        //   ]
-        // },
         files: {
           './style.css': [
             'stylesheets/main.styl'
+          ]
+        }
+      }
+    },
+
+    cssmin: {
+      main: {
+        options: {
+          banner: '/*\n' +
+          ' * Theme Name: <%= pkg.name %>\n' +
+          ' * Theme URI: <%= pkg.website %>\n' +
+          ' * Description: <%= pkg.description %>\n' +
+          ' * Version: <%= pkg.version %>\n' +
+          ' * Author: <%= pkg.author %>\n' +
+          ' * Tags: <%= pkg.tags %>\n' +
+          ' *\n' +
+          ' * build on <%= grunt.template.today("yyyy-mm-dd") %>\n' +
+          '*/\n'
+        },
+        files: {
+          './style.css': [
+            './style.css'
           ]
         }
       }
@@ -106,14 +96,14 @@ module.exports = function(grunt) {
       },
       css: {
         files: ['stylesheets/**/*.styl'],
-        tasks: ['stylus:main', 'concat:styles']
+        tasks: ['stylus:main', 'cssmin:main']
       }
     }
   });
 
   // defined tasks
   grunt.registerTask('build:js', ['jshint', 'coffee:main', 'concat:libs', 'concat:main', 'uglify:main']);
-  grunt.registerTask('build:css', ['jshint', 'stylus:main', 'concat:styles']);
+  grunt.registerTask('build:css', ['jshint', 'stylus:main', 'cssmin:main']);
   grunt.registerTask('build:all', ['build:js', 'build:css']);
 
 };

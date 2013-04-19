@@ -29,6 +29,7 @@
 	</footer><!-- #colophon -->
 </div><!-- #page -->
 
+<script src="<?php echo get_template_directory_uri(); ?>/javascripts/main.js" type="text/javascript"></script>
 <?php wp_footer(); ?>
 
 </body>

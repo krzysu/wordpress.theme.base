@@ -2,7 +2,10 @@
   "name": "wordpress.theme.base",
   "version": "0.0.1",
   "description": "example of using grunt for wordpress theme development",
-  "author": "",
+  "author": "Kris Urbas, @krzysu",
+  "website": "www.myviews.pl",
+  "tags": "demo, example",
+
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-watch": "~0.3.1",
