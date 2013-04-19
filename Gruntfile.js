@@ -6,6 +6,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-stylus');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
 
   // Project configuration
   grunt.initConfig({
@@ -46,6 +47,13 @@ module.exports = function(grunt) {
           'javascripts/main.js'
         ],
         dest: 'javascripts/main.js'
+      },
+      styles: {
+        src: [
+          'stylesheets/banner.css',
+          './style.css'
+        ],
+        dest: './style.css'
       }
     },
 
@@ -85,7 +93,7 @@ module.exports = function(grunt) {
         // },
         files: {
           './style.css': [
-            'stylesheets/**/*.styl'
+            'stylesheets/main.styl'
           ]
         }
       }
@@ -95,13 +103,17 @@ module.exports = function(grunt) {
       js: {
         files: ['javascripts/sources/**/*.coffee', 'javascripts/libs/**/*.js'],
         tasks: ['coffee:main', 'concat:libs', 'concat:main']
+      },
+      css: {
+        files: ['stylesheets/**/*.styl'],
+        tasks: ['stylus:main', 'concat:styles']
       }
     }
   });
 
   // defined tasks
   grunt.registerTask('build:js', ['jshint', 'coffee:main', 'concat:libs', 'concat:main', 'uglify:main']);
-  grunt.registerTask('build:css', ['jshint', 'stylus:main']);
+  grunt.registerTask('build:css', ['jshint', 'stylus:main', 'concat:styles']);
   grunt.registerTask('build:all', ['build:js', 'build:css']);
 
 };
